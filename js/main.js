@@ -9,7 +9,15 @@
                     )
                 break;
             case 'granted':
-                showNotification( 'Welcome back!' );
+                var msgs = [
+                    'This is the first message.',
+                    'This is the second message',
+                    'This is the third message',
+                    'This is the fourth message',
+                    'This is the fifth message'
+                ];
+
+                var sequenceIntervalId = initIntervalSequence( msgs, 1000 );
 
                 break;
             default:
@@ -36,5 +44,24 @@
         var n = new Notification( msg );
 
         setTimeout( function() { n.close(); }, 5000 );
+    }
+
+    function initIntervalSequence( msgs, frequency ) {
+        msgs = msgs || [];
+        frequency = frequency || 5000;
+
+        var counter = 0;
+        var interval = setInterval( function() {
+            if ( counter === msgs.length ) {
+                clearInterval( interval );
+                return;
+            }
+
+            showNotification( msgs[ counter ] );
+
+            counter++;
+        }, frequency );
+
+        return interval;
     }
 } )();
